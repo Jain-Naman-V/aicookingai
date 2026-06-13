@@ -94,6 +94,8 @@ chefflow-ai/
 ├── design.md           # "Frost" style reference — tokens, typography, components
 ├── deploy.md           # Deployment instructions for Vercel, Netlify, and GitHub Pages
 ├── AGENTS.md           # Guide for developer AI assistants working on this repo
+├── test.html           # Browser-based visual unit test runner for core helper functions
+├── test.js             # Node.js command-line automated unit tests
 └── README.md           # You are here
 ```
 
@@ -124,6 +126,22 @@ The meal planner uses dynamic OpenAI-compatible LLM queries with robust fallback
    - **Attempt 2 (JSON Object Fallback)**: If Attempt 1 fails (due to model/endpoint limitations like Ollama or older models rejecting strict JSON schemas), it catches the error and retries with a standard `json_object` format request.
 3. **Pantry Analysis**: Compares generated meal plan ingredients against user pantry items to automatically strike out matching items and set their cost contribution to zero.
 4. **Budget Feasibility**: Compares the estimated grocery list cost to the daily budget, updating the dashboard status badges.
+
+---
+
+## 🧪 Testing
+
+The project includes two automated unit test suites to ensure logic accuracy and prevent regressions:
+
+### 1. Command-Line Suite (Node.js)
+You can run tests directly from the terminal using Node's native `assert` module:
+```bash
+node test.js
+```
+This tests core functions like `isIngredientInPantry` (case-insensitivity, plural/singular suffix matching, word boundary checks) and boundary values for budget and people counters.
+
+### 2. Browser-Based Visual Suite
+Open `test.html` in your web browser. It runs the identical assertions live and displays a clean visual report.
 
 ---
 

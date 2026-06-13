@@ -15,6 +15,8 @@
 | `app.js` | All logic — dynamic model fetching, LLM integration, schema fallback, rendering, export | ~935 |
 | `design.md` | "Frost" design system style reference — color tokens, typography, radii, blur levels | ~90 |
 | `deploy.md` | Deployment guide — Vercel, Netlify, GitHub Pages, and local hosting | ~50 |
+| `test.html` | Browser-based visual unit test runner for core helper functions | ~215 |
+| `test.js` | Node.js command-line automated unit tests (using assert) | ~105 |
 
 ## Architecture
 
@@ -90,8 +92,19 @@ To update the structured JSON returned by the AI, modify the `schema` object def
 
 ## Testing
 
-No automated tests currently. Manual verification:
+The project includes two automated unit test suites:
 
+### 1. Command-Line Tests (Node.js)
+Run the automated test runner in your shell:
+```bash
+node test.js
+```
+This tests core functions like `isIngredientInPantry()` (including plural/singular suffix matching and word boundary safety) and form budget/people validators.
+
+### 2. Browser-Based Visual Tests
+Open `test.html` directly in a browser to run the visual test runner and view test assertions.
+
+### 3. Manual Verification Checklist
 1. Open `index.html` in a browser
 2. Walk through the landing page sections (About, Features)
 3. Click "Start Planning" to go to the preferences form
