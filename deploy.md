@@ -1,6 +1,6 @@
-# CookList AI Deployment Guide
+# ChefFlow AI Deployment Guide
 
-Since CookList AI is a client-side static web application (HTML, CSS, Vanilla JS), it can be deployed for free on any static hosting platform. Below are step-by-step deployment instructions for the most popular platforms.
+Since ChefFlow AI is a client-side static web application (HTML, CSS, Vanilla JS), it can be deployed for free on any static hosting platform. Below are step-by-step deployment instructions for the most popular platforms.
 
 ---
 
@@ -32,7 +32,7 @@ Netlify provides instant static hosting and supports Git integrations as well as
 ### Drag and Drop (Easiest):
 1. Sign in to [Netlify](https://netlify.com).
 2. Go to the **Sites** tab.
-3. Scroll to the bottom and drag-and-drop the `cooklist-ai` directory into the upload box.
+3. Scroll to the bottom and drag-and-drop the `chefflow-ai` directory into the upload box.
 4. Netlify will deploy it instantly and provide a live URL!
 
 ### Via Git Integration:

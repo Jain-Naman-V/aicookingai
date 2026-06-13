@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CookList AI — Application Logic & Constraint Engine
+   ChefFlow AI — Application Logic & Constraint Engine
    ========================================================================== */
 
 // No longer using hardcoded RECIPES_DB. OpenAI will generate recipes dynamically.
@@ -35,9 +35,9 @@ const modelFetchStatus = document.getElementById("model-fetch-status");
 const ingredientInput = document.getElementById("ingredient-input");
 
 // Load stored values from localStorage
-const storedBaseUrl = localStorage.getItem("cooklist_openai_base_url");
-const storedApiKey = localStorage.getItem("cooklist_openai_api_key");
-const storedModel = localStorage.getItem("cooklist_openai_model");
+const storedBaseUrl = localStorage.getItem("chefflow_openai_base_url");
+const storedApiKey = localStorage.getItem("chefflow_openai_api_key");
+const storedModel = localStorage.getItem("chefflow_openai_model");
 
 if (storedBaseUrl) {
   inputBaseUrl.value = storedBaseUrl;
@@ -841,9 +841,9 @@ preferencesForm.addEventListener("submit", (e) => {
   const time = parseInt(document.querySelector('input[name="cooking-time"]:checked').value);
 
   // Save credentials and selected model in localStorage
-  localStorage.setItem("cooklist_openai_base_url", baseUrl);
-  localStorage.setItem("cooklist_openai_api_key", apiKey);
-  localStorage.setItem("cooklist_openai_model", model);
+  localStorage.setItem("chefflow_openai_base_url", baseUrl);
+  localStorage.setItem("chefflow_openai_api_key", apiKey);
+  localStorage.setItem("chefflow_openai_model", model);
 
   runLoadingSequence(budget, people, diet, time, userPantry, baseUrl, apiKey, model);
 });
@@ -856,7 +856,7 @@ function getPlanFormattedText() {
   if (!currentGeneratedPlan) return "";
 
   const plan = currentGeneratedPlan;
-  return `=== COOKLIST AI MEAL PLAN ===
+  return `=== CHEFFLOW AI MEAL PLAN ===
 Estimated Cost: ₹${plan.estimatedCost} (${plan.budgetStatus.replace('_', ' ').toUpperCase()})
 
 BREAKFAST: ${plan.breakfast.name} (${plan.breakfast.time} mins)
@@ -895,7 +895,7 @@ btnDownloadPlan.addEventListener("click", () => {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `cooklist-meal-plan-${new Date().toISOString().slice(0, 10)}.txt`;
+  link.download = `chefflow-meal-plan-${new Date().toISOString().slice(0, 10)}.txt`;
   link.click();
   URL.revokeObjectURL(url);
 });

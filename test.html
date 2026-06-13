@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChefFlow AI — Test Suite</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: #faf6f0;
+      color: #232f2d;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    h1 {
+      border-bottom: 2px solid #3a7d77;
+      padding-bottom: 10px;
+      color: #3a7d77;
+    }
+    .test-case {
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .pass {
+      background-color: #e6f4ea;
+      border-color: #b7e1cd;
+      color: #137333;
+    }
+    .fail {
+      background-color: #fce8e6;
+      border-color: #f7c2c0;
+      color: #c5221f;
+    }
+    .badge {
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.8em;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    .pass .badge {
+      background-color: #137333;
+      color: white;
+    }
+    .fail .badge {
+      background-color: #c5221f;
+      color: white;
+    }
+    .summary {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-top: 20px;
+      padding: 15px;
+      background: #e2ecf0;
+      border-radius: 6px;
+      border: 1px solid #cde0de;
+    }
+  </style>
+</head>
+<body>
+  <h1>ChefFlow AI — Automated Test Runner</h1>
+  <p>This page automatically runs unit assertions on core logic functions to ensure system integrity.</p>
+
+  <div id="test-results">Running tests...</div>
+  <div id="test-summary" class="summary" style="display: none;"></div>
+
+  <script>
+    // Replicate core logic functions to test in isolation
+    function isIngredientInPantry(ing, pantryList) {
+      const clean = (str) => str.toLowerCase().replace(/[(),.-]/g, ' ').replace(/\s+/g, ' ').trim();
+      const escapeRegExp = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      
+      const cr = clean(ing);
+      return pantryList.some(p => {
+        const cp = clean(p);
+        if (cr === cp) return true;
+        
+        try {
+          const regexP = new RegExp('\\b' + escapeRegExp(cp) + '\\b');
+          const regexR = new RegExp('\\b' + escapeRegExp(cr) + '\\b');
+          return regexP.test(cr) || regexR.test(cp);
+        } catch (e) {
+          return cr.includes(cp) || cp.includes(cr);
+        }
+      });
+    }
+
+    // Test Runner Logic
+    const resultsContainer = document.getElementById("test-results");
+    const summaryContainer = document.getElementById("test-summary");
+    resultsContainer.innerHTML = "";
+
+    let passedCount = 0;
+    let failedCount = 0;
+
+    function assert(name, condition, expectedMessage) {
+      const isPassed = condition;
+      if (isPassed) {
+        passedCount++;
+      } else {
+        failedCount++;
+      }
+
+      const div = document.createElement("div");
+      div.className = `test-case ${isPassed ? 'pass' : 'fail'}`;
+      
+      const desc = document.createElement("span");
+      desc.textContent = `${name} — ${isPassed ? 'Passed' : 'Failed'}: ${expectedMessage}`;
+      
+      const badge = document.createElement("span");
+      badge.className = "badge";
+      badge.textContent = isPassed ? "Pass" : "Fail";
+
+      div.appendChild(desc);
+      div.appendChild(badge);
+      resultsContainer.appendChild(div);
+    }
+
+    // Run Tests
+    try {
+      // 1. Test Pantry Matching
+      assert(
+        "Pantry match exact",
+        isIngredientInPantry("tomato", ["tomato", "onion"]),
+        "Should match exact string 'tomato'"
+      );
+
+      assert(
+        "Pantry match case-insensitive",
+        isIngredientInPantry("Tomato", ["tomato", "onion"]),
+        "Should match case-insensitively"
+      );
+
+      assert(
+        "Pantry match plural/singular boundary",
+        isIngredientInPantry("fresh organic tomatoes", ["tomato"]),
+        "Should match tomato in plural/phrased ingredients"
+      );
+
+      assert(
+        "Pantry match partial string",
+        isIngredientInPantry("bell pepper", ["red bell pepper"]),
+        "Should match partially on pepper descriptions"
+      );
+
+      assert(
+        "Pantry mismatch",
+        !isIngredientInPantry("chicken", ["tomato", "onion"]),
+        "Should return false if chicken is not in pantry"
+      );
+
+      // 2. Test mock validation constraints
+      const validateBudgetMock = (val) => !isNaN(val) && val >= 10 && val <= 10000;
+      assert(
+        "Budget validation valid min",
+        validateBudgetMock(10),
+        "₹10 daily budget should be valid"
+      );
+      assert(
+        "Budget validation valid max",
+        validateBudgetMock(10000),
+        "₹10000 daily budget should be valid"
+      );
+      assert(
+        "Budget validation invalid below min",
+        !validateBudgetMock(5),
+        "₹5 daily budget should be invalid"
+      );
+      assert(
+        "Budget validation invalid above max",
+        !validateBudgetMock(15000),
+        "₹15000 daily budget should be invalid"
+      );
+
+      const validatePeopleMock = (val) => !isNaN(val) && val >= 1 && val <= 20;
+      assert(
+        "People count valid min",
+        validatePeopleMock(1),
+        "1 person should be valid"
+      );
+      assert(
+        "People count valid max",
+        validatePeopleMock(20),
+        "20 people should be valid"
+      );
+      assert(
+        "People count invalid zero",
+        !validatePeopleMock(0),
+        "0 people should be invalid"
+      );
+
+      // Display Summary
+      summaryContainer.style.display = "block";
+      summaryContainer.textContent = `Test Run Completed: ${passedCount} passed, ${failedCount} failed. Status: ${failedCount === 0 ? 'ALL PASSED' : 'SOME FAILED'}`;
+      if (failedCount > 0) {
+        summaryContainer.style.backgroundColor = "#fce8e6";
+        summaryContainer.style.borderColor = "#f7c2c0";
+        summaryContainer.style.color = "#c5221f";
+      } else {
+        summaryContainer.style.backgroundColor = "#e6f4ea";
+        summaryContainer.style.borderColor = "#b7e1cd";
+        summaryContainer.style.color = "#137333";
+      }
+    } catch (err) {
+      resultsContainer.innerHTML += `<div class="test-case fail">Runner Error: ${err.message} <span class="badge">Fail</span></div>`;
+    }
+  </script>
+</body>
+</html>

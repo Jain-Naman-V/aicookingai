@@ -12,17 +12,17 @@ Frost's visual system evokes a warm, organic, living experience. It replaces fla
 | Glass White | `rgba(255, 255, 255, 0.2)` | `--color-glass-white` | Base glass layer (Level 1) |
 | Glass Strong | `rgba(255, 255, 255, 0.3)` | `--color-glass-strong` | Elevated glass layer (Level 2/3) |
 | Glass Border | `rgba(255, 255, 255, 0.4)` | `--color-glass-border` | Frosted luminous borders |
-| Accent | `#e07a5f` | `--color-accent` | Terracotta orange accent for interactive elements |
-| Accent Glow | `rgba(224, 122, 95, 0.3)` | `--color-accent-glow` | Hover glows and selection states |
-| Text Primary | `#332722` | `--color-text-primary` | Deep espresso brown text |
-| Text Secondary| `rgba(51, 39, 34, 0.7)` | `--color-text-secondary`| Muted text |
-| Charcoal Text | `#1b1b1b` | `--color-charcoal-text` | Only for rare high-contrast needs |
+| Accent | `#3a7d77` | `--color-accent` | Warm teal accent for interactive elements |
+| Accent Glow | `rgba(58, 125, 119, 0.3)` | `--color-accent-glow` | Hover glows and selection states |
+| Text Primary | `#232f2d` | `--color-text-primary` | Deep teal-charcoal text |
+| Text Secondary| `rgba(35, 47, 45, 0.7)` | `--color-text-secondary`| Muted text |
+| Charcoal Text | `#17201f` | `--color-charcoal-text` | Only for rare high-contrast needs |
 
 **Background Mesh Gradient Stops:**
-- Rose (Cream): `#fcfaf5` (`--color-rose`)
-- Peach (Sand): `#f5deb3` (`--color-peach`)
-- Lavender (Apricot): `#f4cca1` (`--color-lavender`)
-- Mint (Terracotta): `#e89f71` (`--color-mint`)
+- Rose (Cream): `#faf6f0` (`--color-rose`)
+- Peach (Sand): `#ebdcd0` (`--color-peach`)
+- Lavender (Apricot): `#e2ecf0` (`--color-lavender`)
+- Mint (Terracotta): `#9bbda9` (`--color-mint`)
 
 ## Tokens — Typography
 
@@ -78,7 +78,7 @@ The design strongly minimizes shadows, opting instead for progressive background
 - Do not use sharp corners (e.g., `0px` or `4px`) for primary UI surfaces.
 - Avoid flat, static backgrounds — the environment should feel alive but unobtrusive.
 
-## Agent Prompt Guide
+## Developer Prompt Guide
 
 When building new components, apply the correct "Glass Level" utility classes (`.glass-panel-1`, `.glass-panel-2`, `.glass-panel-3`) or replicate their properties.
 
