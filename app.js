@@ -448,20 +448,28 @@ suggestionsList.addEventListener("click", (e) => {
 
 function isIngredientInPantry(ing, pantryList) {
   const clean = (str) => str.toLowerCase().replace(/[(),.-]/g, ' ').replace(/\s+/g, ' ').trim();
+  const singularize = (str) => str.replace(/s\b/g, '').replace(/es\b/g, '');
   const escapeRegExp = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   
   const cr = clean(ing);
+  const crSingular = singularize(cr);
+  
   return pantryList.some(p => {
     const cp = clean(p);
-    if (cr === cp) return true;
+    const cpSingular = singularize(cp);
     
-    // Check for word boundary match
+    if (cr === cp || crSingular === cpSingular) return true;
+    
+    if (cr.includes(cp) || cp.includes(cr) || crSingular.includes(cpSingular) || cpSingular.includes(crSingular)) {
+      return true;
+    }
+    
     try {
-      const regexP = new RegExp('\\b' + escapeRegExp(cp) + '\\b');
-      const regexR = new RegExp('\\b' + escapeRegExp(cr) + '\\b');
-      return regexP.test(cr) || regexR.test(cp);
+      const regexP = new RegExp('\\b' + escapeRegExp(cpSingular) + '\\b');
+      const regexR = new RegExp('\\b' + escapeRegExp(crSingular) + '\\b');
+      return regexP.test(crSingular) || regexR.test(cpSingular);
     } catch (e) {
-      return cr.includes(cp) || cp.includes(cr);
+      return false;
     }
   });
 }
